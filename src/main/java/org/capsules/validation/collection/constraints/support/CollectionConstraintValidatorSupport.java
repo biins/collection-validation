@@ -1,10 +1,14 @@
-package org.capsules.validation.collection.constraints.impl.util;
+package org.capsules.validation.collection.constraints.support;
 
 import org.hibernate.validator.metadata.ConstraintHelper;
 import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.Assert;
+import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -15,22 +19,32 @@ import java.util.List;
 /**
  * @author Martin Janys
  */
-public class ConstraintValidatorHelper {
+public class CollectionConstraintValidatorSupport implements InitializingBean, ApplicationContextAware {
 
-    private static ConstraintValidatorHelper constraintValidatorHelper;
+    private static CollectionConstraintValidatorSupport collectionConstraintValidatorSupport;
 
     private ConstraintHelper constraintHelper;
     private ConstraintValidatorFactory constraintValidatorFactory;
+    private ApplicationContext applicationContext;
 
-    public ConstraintValidatorHelper() {
+    public CollectionConstraintValidatorSupport() {
         this.constraintHelper = new ConstraintHelper();
-        setConstraintValidatorHelper(this);
     }
 
-    public ConstraintValidatorHelper(ConstraintValidatorFactory constraintValidatorFactory) {
+    public CollectionConstraintValidatorSupport(ConstraintValidatorFactory constraintValidatorFactory) {
         this.constraintHelper = new ConstraintHelper();
         this.constraintValidatorFactory = constraintValidatorFactory;
-        setConstraintValidatorHelper(this);
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    public void afterPropertiesSet() throws Exception {
+        if (constraintValidatorFactory == null) {
+            constraintValidatorFactory = new SpringConstraintValidatorFactory(applicationContext.getAutowireCapableBeanFactory());
+        }
+        setCollectionConstraintValidatorSupport(this);
     }
 
     public List<Class<? extends ConstraintValidator<? extends Annotation, ?>>> getBuiltInConstraintClasses(Class<? extends Annotation> annotationClass) {
@@ -86,17 +100,13 @@ public class ConstraintValidatorHelper {
         }
     }
 
-    public void initializeValidator(Annotation annotation, ConstraintValidator validator) {
-        validator.initialize(annotation);
+    public static void setCollectionConstraintValidatorSupport(CollectionConstraintValidatorSupport collectionConstraintValidatorSupport) {
+        CollectionConstraintValidatorSupport.collectionConstraintValidatorSupport = collectionConstraintValidatorSupport;
     }
 
-    public static void setConstraintValidatorHelper(ConstraintValidatorHelper constraintValidatorHelper) {
-        ConstraintValidatorHelper.constraintValidatorHelper = constraintValidatorHelper;
-    }
-
-    public static ConstraintValidatorHelper getConstraintValidatorHelper() {
-        Assert.notNull(ConstraintValidatorHelper.constraintValidatorHelper, "Initialize helper");
-        return ConstraintValidatorHelper.constraintValidatorHelper;
+    public static CollectionConstraintValidatorSupport getCollectionConstraintValidatorSupport() {
+        Assert.notNull(CollectionConstraintValidatorSupport.collectionConstraintValidatorSupport, "Initialize helper");
+        return CollectionConstraintValidatorSupport.collectionConstraintValidatorSupport;
     }
 }
 

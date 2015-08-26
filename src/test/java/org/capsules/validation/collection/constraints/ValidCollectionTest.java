@@ -1,12 +1,11 @@
 package org.capsules.validation.collection.constraints;
 
-import org.capsules.validation.collection.constraints.impl.util.ConstraintValidatorHelper;
+import org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport;
 import org.capsules.validation.collection.constraints.spring.ValidElements;
 import org.hibernate.validator.constraints.Length;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,9 +14,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 
-import javax.validation.ConstraintValidatorFactory;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,16 +38,12 @@ public class ValidCollectionTest {
     @Configuration
     static class ContextConfiguration {
         @Bean
-        public ConstraintValidatorFactory springConstraintValidatorFactory(AutowireCapableBeanFactory autowireCapableBeanFactory) {
-            return new SpringConstraintValidatorFactory(autowireCapableBeanFactory);
-        }
-        @Bean
         public LocalValidatorFactoryBean localValidatorFactoryBean() {
             return new LocalValidatorFactoryBean();
         }
         @Bean
-        public ConstraintValidatorHelper constraintValidatorHelper(ConstraintValidatorFactory constraintValidatorFactory) {
-            return new ConstraintValidatorHelper(constraintValidatorFactory);
+        public CollectionConstraintValidatorSupport constraintValidatorHelper() {
+            return new CollectionConstraintValidatorSupport();
         }
     }
 

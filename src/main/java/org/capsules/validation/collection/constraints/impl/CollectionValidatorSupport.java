@@ -1,6 +1,6 @@
 package org.capsules.validation.collection.constraints.impl;
 
-import org.capsules.validation.collection.constraints.impl.util.ConstraintValidatorHelper;
+import org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ConstraintValidator;
@@ -15,7 +15,7 @@ import java.util.Iterator;
 @SuppressWarnings("unchecked")
 public abstract class CollectionValidatorSupport<A extends Annotation, T extends Collection> implements ConstraintValidator<A, T> {
 
-    protected final ConstraintValidatorHelper helper = ConstraintValidatorHelper.getConstraintValidatorHelper();
+    protected final CollectionConstraintValidatorSupport helper = CollectionConstraintValidatorSupport.getCollectionConstraintValidatorSupport();
     protected ConstraintValidator validator;
     protected String message;
 
