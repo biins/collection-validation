@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 import java.math.BigDecimal;
 
 /**
- * @see {@link Min}
+ * @see Min
  *
  * @author Martin Janys
  */
@@ -20,13 +20,14 @@ import java.math.BigDecimal;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsMin {
 
     Min value();
 
     Class<?> element() default BigDecimal.class;
 
-    String message() default "{validation.collection.constraints.ElementsMin[]}";
+    String message() default "{validation.collection.constraints.ElementsMin.message}";
 
     Class<?>[] groups() default {};
 

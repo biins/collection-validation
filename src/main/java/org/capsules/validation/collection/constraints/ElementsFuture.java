@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 import java.util.Date;
 
 /**
- * @see {@link Future}
+ * @see Future
  *
  * @author Martin Janys
  */
@@ -20,13 +20,14 @@ import java.util.Date;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsFuture {
 
     Future value() default @Future;
 
     Class<?> element() default Date.class;
 
-    String message() default "{validation.collection.constraints.ElementsFuture[]}";
+    String message() default "{validation.collection.constraints.ElementsFuture.message}";
 
     Class<?>[] groups() default {};
 

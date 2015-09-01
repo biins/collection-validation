@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsMinValidator
-        extends CollectionValidatorSupport<ElementsMin, Collection>
+        extends AbstractCollectionValidator<ElementsMin, Collection>
         implements ConstraintValidator<ElementsMin, Collection> {
 
     public void initialize(ElementsMin constraintAnnotation) {

@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsUrlValidator
-        extends CollectionValidatorSupport<ElementsURL, Collection>
+        extends AbstractCollectionValidator<ElementsURL, Collection>
         implements ConstraintValidator<ElementsURL, Collection> {
 
     public void initialize(ElementsURL constraintAnnotation) {

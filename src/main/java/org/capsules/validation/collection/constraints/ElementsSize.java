@@ -4,11 +4,12 @@ import org.capsules.validation.collection.constraints.impl.ElementsSizeValidator
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import javax.validation.constraints.Size;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Size}
+ * @see Size
  *
  * @author Martin Janys
  */
@@ -19,13 +20,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsSize {
 
     Size value();
 
     Class<?> element();
 
-    String message() default "{validation.collection.constraints.ElementsSize[]}";
+    String message() default "{validation.collection.constraints.ElementsSize.message}";
 
     Class<?>[] groups() default {};
 

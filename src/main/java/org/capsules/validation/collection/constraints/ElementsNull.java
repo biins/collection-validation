@@ -8,7 +8,7 @@ import javax.validation.constraints.Null;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Null}
+ * @see Null
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsNull {
 
     Null value() default @Null;
 
     Class<?> element() default Object.class;
 
-    String message() default "{validation.collection.constraints.ElementsNull[]}";
+    String message() default "{validation.collection.constraints.ElementsNull.message}";
 
     Class<?>[] groups() default {};
 

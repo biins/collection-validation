@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.annotation.*;
 
 /**
- * @see {@link NotNull}
+ * @see NotNull
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsNotNull {
 
     NotNull value() default @NotNull;
 
     Class<?> element() default Object.class;
 
-    String message() default "{validation.collection.constraints.ElementsNotNull[]}";
+    String message() default "{validation.collection.constraints.ElementsNotNull.message}";
 
     Class<?>[] groups() default {};
 

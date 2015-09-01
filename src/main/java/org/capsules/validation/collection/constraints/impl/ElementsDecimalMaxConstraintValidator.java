@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsDecimalMaxConstraintValidator
-    extends CollectionValidatorSupport<ElementsDecimalMax, Collection>
+    extends AbstractCollectionValidator<ElementsDecimalMax, Collection>
     implements ConstraintValidator<ElementsDecimalMax, Collection> {
 
     public void initialize(ElementsDecimalMax constraintAnnotation) {

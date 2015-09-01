@@ -8,7 +8,7 @@ import javax.validation.constraints.Digits;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Digits}
+ * @see Digits
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsDigits {
 
     Digits value();
 
     Class<?> element() default Number.class;
 
-    String message() default "{validation.collection.constraints.ElementsDigits[]}";
+    String message() default "{validation.collection.constraints.ElementsDigits.message}";
 
     Class<?>[] groups() default {};
 

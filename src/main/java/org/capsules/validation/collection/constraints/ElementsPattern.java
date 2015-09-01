@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Pattern}
+ * @see Pattern
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsPattern {
 
     Pattern value();
 
     Class<?> element() default String.class;
 
-    String message() default "{validation.collection.constraints.ElementsPattern[]}";
+    String message() default "{validation.collection.constraints.ElementsPattern.message}";
 
     Class<?>[] groups() default {};
 

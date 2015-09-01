@@ -8,7 +8,7 @@ import javax.validation.constraints.DecimalMin;
 import java.lang.annotation.*;
 
 /**
- * @see {@link DecimalMin}
+ * @see DecimalMin
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsDecimalMin {
 
     DecimalMin value();
 
     Class<?> element() default Number.class;
 
-    String message() default "{validation.collection.constraints.ElementsDecimalMin[]}";
+    String message() default "{validation.collection.constraints.ElementsDecimalMin.message}";
 
     Class<?>[] groups() default {};
 

@@ -2,18 +2,18 @@ package org.capsules.validation.collection.constraints.impl;
 
 import org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.annotation.Annotation;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author Martin Janys
  */
 @SuppressWarnings("unchecked")
-public abstract class CollectionValidatorSupport<A extends Annotation, T extends Collection> implements ConstraintValidator<A, T> {
+public abstract class AbstractCollectionValidator<A extends Annotation, T extends Collection> implements ConstraintValidator<A, T> {
 
     protected final CollectionConstraintValidatorSupport helper = CollectionConstraintValidatorSupport.getCollectionConstraintValidatorSupport();
     protected ConstraintValidator validator;
@@ -31,22 +31,18 @@ public abstract class CollectionValidatorSupport<A extends Annotation, T extends
 
         boolean isValid = true;
         int i = 0;
+        List<Integer> indexes = new ArrayList<Integer>();
         Iterator iterator = elements.iterator();
         while (iterator.hasNext()) {
             Object element = iterator.next();
             boolean result = validator.isValid(element, context);
             if (!result) {
-                buildMessage(context, element, i);
+                indexes.add(i + 1);
                 isValid = false;
             }
             i++;
         }
+        helper.buildMessage(message, context, indexes);
         return isValid;
-    }
-
-    protected void buildMessage(ConstraintValidatorContext context, Object element, int i) {
-        context.disableDefaultConstraintViolation();
-        ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder = context.buildConstraintViolationWithTemplate(message.replace("[]", "["+i+"]"));
-        constraintViolationBuilder.addConstraintViolation();
     }
 }

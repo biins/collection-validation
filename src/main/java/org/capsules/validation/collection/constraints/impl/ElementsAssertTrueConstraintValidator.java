@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsAssertTrueConstraintValidator
-        extends CollectionValidatorSupport<ElementsAssertTrue, Collection>
+        extends AbstractCollectionValidator<ElementsAssertTrue, Collection>
         implements ConstraintValidator<ElementsAssertTrue, Collection> {
 
     public void initialize(ElementsAssertTrue constraintAnnotation) {

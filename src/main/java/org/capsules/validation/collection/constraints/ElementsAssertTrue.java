@@ -8,7 +8,7 @@ import javax.validation.constraints.AssertTrue;
 import java.lang.annotation.*;
 
 /**
- * @see {@link AssertTrue}
+ * @see AssertTrue
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsAssertTrue {
 
     AssertTrue value() default @AssertTrue;
 
     Class<?> element() default Boolean.class;
 
-    String message() default "{validation.collection.constraints.ElementsAssertTrue[]}";
+    String message() default "{validation.collection.constraints.ElementsAssertTrue.message}";
 
     Class<?>[] groups() default {};
 

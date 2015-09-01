@@ -8,7 +8,7 @@ import javax.validation.constraints.DecimalMax;
 import java.lang.annotation.*;
 
 /**
- * @see {@link DecimalMax}
+ * @see DecimalMax
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsDecimalMax {
 
     DecimalMax value();
 
     Class<?> element() default Number.class;
 
-    String message() default "{validation.collection.constraints.ElementsDecimalMax[]}";
+    String message() default "{validation.collection.constraints.ElementsDecimalMax.message}";
 
     Class<?>[] groups() default {};
 

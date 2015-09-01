@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsEmailValidator
-        extends CollectionValidatorSupport<ElementsEmail, Collection>
+        extends AbstractCollectionValidator<ElementsEmail, Collection>
         implements ConstraintValidator<ElementsEmail, Collection> {
 
     public void initialize(ElementsEmail constraintAnnotation) {

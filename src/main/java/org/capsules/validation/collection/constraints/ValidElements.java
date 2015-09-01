@@ -1,6 +1,6 @@
-package org.capsules.validation.collection.constraints.spring;
+package org.capsules.validation.collection.constraints;
 
-import org.capsules.validation.collection.constraints.impl.spring.ValidElementsConstraintValidator;
+import org.capsules.validation.collection.constraints.impl.ValidElementsConstraintValidator;
 import org.springframework.validation.Validator;
 
 import javax.validation.Constraint;
@@ -17,6 +17,7 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ValidElements {
 
     Class<? extends Validator> value();

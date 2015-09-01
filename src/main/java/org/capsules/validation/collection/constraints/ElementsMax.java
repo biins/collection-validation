@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 import java.math.BigDecimal;
 
 /**
- * @see {@link Max}
+ * @see Max
  *
  * @author Martin Janys
  */
@@ -20,13 +20,14 @@ import java.math.BigDecimal;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsMax {
 
     Max value();
 
     Class<?> element() default BigDecimal.class;
 
-    String message() default "{validation.collection.constraints.ElementsMax[]}";
+    String message() default "{validation.collection.constraints.ElementsMax.message}";
 
     Class<?>[] groups() default {};
 

@@ -8,7 +8,7 @@ import javax.validation.constraints.AssertFalse;
 import java.lang.annotation.*;
 
 /**
- * @see {@link AssertFalse}
+ * @see AssertFalse
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsAssertFalse {
 
     AssertFalse value() default @AssertFalse;
 
     Class<?> element() default Boolean.class;
 
-    String message() default "{validation.collection.constraints.ElementsAssertFalse[]}";
+    String message() default "{validation.collection.constraints.ElementsAssertFalse.message}";
 
     Class<?>[] groups() default {};
 

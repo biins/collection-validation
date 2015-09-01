@@ -1,6 +1,6 @@
 package org.capsules.validation.collection.constraints.support;
 
-import org.hibernate.validator.metadata.ConstraintHelper;
+import org.hibernate.validator.internal.metadata.core.ConstraintHelper;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +12,7 @@ import org.springframework.validation.beanvalidation.SpringConstraintValidatorFa
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintValidatorFactory;
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -23,6 +24,7 @@ public class CollectionConstraintValidatorSupport implements InitializingBean, A
 
     private static CollectionConstraintValidatorSupport collectionConstraintValidatorSupport;
 
+    private MessagePreInterpolate messagePreInterpolate;
     private ConstraintHelper constraintHelper;
     private ConstraintValidatorFactory constraintValidatorFactory;
     private ApplicationContext applicationContext;
@@ -40,32 +42,34 @@ public class CollectionConstraintValidatorSupport implements InitializingBean, A
         this.applicationContext = applicationContext;
     }
 
+    public void setMessagePreInterpolate(MessagePreInterpolate messagePreInterpolate) {
+        this.messagePreInterpolate = messagePreInterpolate;
+    }
+
     public void afterPropertiesSet() throws Exception {
         if (constraintValidatorFactory == null) {
             constraintValidatorFactory = new SpringConstraintValidatorFactory(applicationContext.getAutowireCapableBeanFactory());
         }
+        if (messagePreInterpolate == null) {
+            messagePreInterpolate = new DefaultIndexMessagePreInterpolate();
+        }
         setCollectionConstraintValidatorSupport(this);
     }
 
-    public List<Class<? extends ConstraintValidator<? extends Annotation, ?>>> getBuiltInConstraintClasses(Class<? extends Annotation> annotationClass) {
-        return constraintHelper.getBuiltInConstraints(annotationClass);
-    }
-
     public Class<? extends ConstraintValidator<? extends Annotation, ?>> getBuiltInConstraintClass(Class<? extends Annotation> annotationClass, Class<?> type) {
-        List<Class<? extends ConstraintValidator<? extends Annotation, ?>>> validators = constraintHelper.getBuiltInConstraints(annotationClass);
-
+        List allValidatorClasses = constraintHelper.getAllValidatorClasses(annotationClass);
         // equals
-        for (Class<? extends ConstraintValidator<? extends Annotation, ?>> validator : validators) {
-            Class<?> cls = GenericTypeResolver.resolveTypeArguments(validator, ConstraintValidator.class)[1];
+        for (Object validator : allValidatorClasses) {
+            Class<?> cls = GenericTypeResolver.resolveTypeArguments((Class<?>) validator, ConstraintValidator.class)[1];
             if (cls != null && cls.equals(type)) {
-                return validator;
+                return (Class<? extends ConstraintValidator<? extends Annotation, ?>>) validator;
             }
         }
         // assignable
-        for (Class<? extends ConstraintValidator<? extends Annotation, ?>> validator : validators) {
-            Class<?> cls = GenericTypeResolver.resolveTypeArguments(validator, ConstraintValidator.class)[1];
+        for (Object validator : allValidatorClasses) {
+            Class<?> cls = GenericTypeResolver.resolveTypeArguments((Class<?>) validator, ConstraintValidator.class)[1];
             if (cls != null && cls.isAssignableFrom(type)) {
-                return validator;
+                return (Class<? extends ConstraintValidator<? extends Annotation, ?>>) validator;
             }
         }
 
@@ -107,6 +111,10 @@ public class CollectionConstraintValidatorSupport implements InitializingBean, A
     public static CollectionConstraintValidatorSupport getCollectionConstraintValidatorSupport() {
         Assert.notNull(CollectionConstraintValidatorSupport.collectionConstraintValidatorSupport, "Initialize helper");
         return CollectionConstraintValidatorSupport.collectionConstraintValidatorSupport;
+    }
+
+    public void buildMessage(String message, ConstraintValidatorContext context, List<Integer> indexes) {
+        messagePreInterpolate.buildMessage(message, context, indexes);
     }
 }
 

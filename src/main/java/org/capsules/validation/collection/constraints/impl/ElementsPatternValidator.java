@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsPatternValidator
-        extends CollectionValidatorSupport<ElementsPattern, Collection>
+        extends AbstractCollectionValidator<ElementsPattern, Collection>
         implements ConstraintValidator<ElementsPattern, Collection> {
 
     public void initialize(ElementsPattern constraintAnnotation) {

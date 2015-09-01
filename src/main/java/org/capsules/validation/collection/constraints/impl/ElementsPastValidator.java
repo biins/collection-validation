@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsPastValidator
-        extends CollectionValidatorSupport<ElementsPast, Collection>
+        extends AbstractCollectionValidator<ElementsPast, Collection>
         implements ConstraintValidator<ElementsPast, Collection> {
 
     public void initialize(ElementsPast constraintAnnotation) {

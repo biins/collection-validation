@@ -8,7 +8,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @see {@link URL}
+ * @see URL
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsURL {
 
     URL value() default @URL;
 
     Class<?> element() default String.class;
 
-    String message() default "{validation.collection.constraints.ElementsURL[]}";
+    String message() default "{validation.collection.constraints.ElementsURL.message}";
 
     Class<?>[] groups() default {};
 

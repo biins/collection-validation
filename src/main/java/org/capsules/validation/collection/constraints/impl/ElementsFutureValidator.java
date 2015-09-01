@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsFutureValidator
-        extends CollectionValidatorSupport<ElementsFuture, Collection>
+        extends AbstractCollectionValidator<ElementsFuture, Collection>
         implements ConstraintValidator<ElementsFuture, Collection> {
 
     public void initialize(ElementsFuture constraintAnnotation) {

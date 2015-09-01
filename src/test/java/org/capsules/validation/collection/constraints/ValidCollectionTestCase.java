@@ -1,7 +1,6 @@
 package org.capsules.validation.collection.constraints;
 
 import org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport;
-import org.capsules.validation.collection.constraints.spring.ValidElements;
 import org.hibernate.validator.constraints.Length;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class ValidCollectionTest {
+public class ValidCollectionTestCase {
 
     @Autowired
     private LocalValidatorFactoryBean validator;
@@ -90,7 +89,7 @@ public class ValidCollectionTest {
         validSize = new ValidSize("333", "1", "333");
         result = new BeanPropertyBindingResult(validSize, "validSize");
         validator.validate(validSize, result);
-        assertEquals(2, result.getErrorCount());
+        assertEquals(1, result.getErrorCount());
 
         FieldError fieldError = result.getFieldError("field");
         List<FieldError> fieldErrors = result.getFieldErrors("field");
@@ -103,8 +102,7 @@ public class ValidCollectionTest {
         assertTrue(errorCodes.contains("ElementsSize.validSize.field"));
         assertTrue(errorCodes.contains("ElementsSize.field"));
         assertTrue(errorCodes.contains("ElementsSize"));
-        assertTrue(messages.contains("{validation.collection.constraints.ElementsSize[0]}"));
-        assertTrue(messages.contains("{validation.collection.constraints.ElementsSize[2]}"));
+        assertTrue(messages.contains("{validation.collection.constraints.ElementsSize.message}@(1, 3)"));
     }
 
     class ValidSizeCustomMessage {
@@ -117,7 +115,7 @@ public class ValidCollectionTest {
 
     @Test
     public void validSizeCustomMessage() {
-        ValidSizeCustomMessage validSize = new ValidSizeCustomMessage();
+        ValidSizeCustomMessage validSize;
 
         validSize = new ValidSizeCustomMessage("1", "1", "333");
         BeanPropertyBindingResult result = new BeanPropertyBindingResult(validSize, "validSize");

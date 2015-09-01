@@ -8,7 +8,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Length}
+ * @see Length
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsLength {
 
     Length value();
 
     Class<?> element() default String.class;
 
-    String message() default "{validation.collection.constraints.ElementsLength[]}";
+    String message() default "{validation.collection.constraints.ElementsLength.message}";
 
     Class<?>[] groups() default {};
 

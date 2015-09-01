@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 import java.util.Date;
 
 /**
- * @see {@link Past}
+ * @see Past
  *
  * @author Martin Janys
  */
@@ -20,13 +20,14 @@ import java.util.Date;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsPast {
 
     Past value() default @Past;
 
     Class<?> element() default Date.class;
 
-    String message() default "{validation.collection.constraints.ElementsPast[]}";
+    String message() default "{validation.collection.constraints.ElementsPast.message}";
 
     Class<?>[] groups() default {};
 

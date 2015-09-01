@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsMaxValidator
-        extends CollectionValidatorSupport<ElementsMax, Collection>
+        extends AbstractCollectionValidator<ElementsMax, Collection>
         implements ConstraintValidator<ElementsMax, Collection> {
 
     public void initialize(ElementsMax constraintAnnotation) {

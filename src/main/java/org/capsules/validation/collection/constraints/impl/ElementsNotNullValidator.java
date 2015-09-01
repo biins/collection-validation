@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsNotNullValidator
-        extends CollectionValidatorSupport<ElementsNotNull, Collection>
+        extends AbstractCollectionValidator<ElementsNotNull, Collection>
         implements ConstraintValidator<ElementsNotNull, Collection> {
 
     public void initialize(ElementsNotNull constraintAnnotation) {

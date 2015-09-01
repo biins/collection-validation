@@ -8,7 +8,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * @see {@link Email}
+ * @see Email
  *
  * @author Martin Janys
  */
@@ -19,13 +19,14 @@ import java.lang.annotation.*;
         ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
+@ElementsValidator
 public @interface ElementsEmail {
 
     Email value() default @Email;
 
     Class<?> element() default String.class;
 
-    String message() default "{validation.collection.constraints.ElementsEmail[]}";
+    String message() default "{validation.collection.constraints.ElementsEmail.message}";
 
     Class<?>[] groups() default {};
 

@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsDigitsConstraintValidator
-        extends CollectionValidatorSupport<ElementsDigits, Collection>
+        extends AbstractCollectionValidator<ElementsDigits, Collection>
         implements ConstraintValidator<ElementsDigits, Collection> {
 
     public void initialize(ElementsDigits constraintAnnotation) {

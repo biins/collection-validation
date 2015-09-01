@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Martin Janys
  */
 public class ElementsLengthValidator
-        extends CollectionValidatorSupport<ElementsLength, Collection>
+        extends AbstractCollectionValidator<ElementsLength, Collection>
         implements ConstraintValidator<ElementsLength, Collection> {
 
     public void initialize(ElementsLength constraintAnnotation) {

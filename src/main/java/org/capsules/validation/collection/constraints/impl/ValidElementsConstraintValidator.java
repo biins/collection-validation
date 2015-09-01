@@ -1,9 +1,8 @@
-package org.capsules.validation.collection.constraints.impl.spring;
+package org.capsules.validation.collection.constraints.impl;
 
-import org.capsules.validation.collection.constraints.spring.ValidElements;
+import org.capsules.validation.collection.constraints.ValidElements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.DirectFieldBindingResult;
 import org.springframework.validation.Validator;
 
@@ -36,7 +35,9 @@ public class ValidElementsConstraintValidator
         while (iterator.hasNext()) {
             Object element = iterator.next();
             DirectFieldBindingResult bindingResult = new DirectFieldBindingResult(elements, "element["+i+"]");
-            validator.validate(element, bindingResult);
+            if (validator.supports(element.getClass())) {
+                validator.validate(element, bindingResult);
+            }
             if (bindingResult.hasErrors()) {
                 buildMessage(context, element, i);
                 isValid = false;
