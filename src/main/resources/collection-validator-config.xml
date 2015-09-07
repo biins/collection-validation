@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean class="org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
+       <bean class="org.biins.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
 
        <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
               <property name="messageInterpolator" ref="collectionValidatorMessageInterpolator"/>
        </bean>
 
-       <bean id="collectionValidatorMessageInterpolator" class="org.capsules.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
+       <bean id="collectionValidatorMessageInterpolator" class="org.biins.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
               <property name="messageSource" ref="collectionValidatorMessageSource"/>
        </bean>
 
