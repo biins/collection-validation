@@ -43,6 +43,7 @@ public MessageSource messageSource() {
 
 <bean class="org.capsules.validation.collection.constraints.CollectionValidatorConfig"/>
 ```
+or
 ```
 <bean class="org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
        
