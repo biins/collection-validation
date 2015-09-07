@@ -1,6 +1,7 @@
 package org.capsules.validation.collection.constraints;
 
 import org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport;
+import org.capsules.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean;
 import org.capsules.validation.collection.constraints.support.ElementsResourceBundleMessageInterpolator;
 import org.capsules.validation.collection.constraints.web.Person;
 import org.capsules.validation.collection.constraints.web.PersonController;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.MessageInterpolator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -65,11 +67,24 @@ public class WebIntegrationTestCase {
             return new CollectionConstraintValidatorSupport();
         }
         @Bean
-        public LocalValidatorFactoryBean localValidatorFactoryBean() {
+        public LocalValidatorFactoryBean localValidatorFactoryBean() throws Exception {
             LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-            localValidatorFactoryBean.setMessageInterpolator(ElementsResourceBundleMessageInterpolator.HibernateValidatorDelegate.buildMessageInterpolator(messageSource()));
+            localValidatorFactoryBean.setMessageInterpolator(messageInterpolation());
             return localValidatorFactoryBean;
         }
+
+        @Bean
+        public MessageInterpolator messageInterpolation() throws Exception {
+            return messageInterpolationFactoryBean().getObject();
+        }
+
+        @Bean
+        public ElementsMessageInterpolatorFactoryBean messageInterpolationFactoryBean() {
+            ElementsMessageInterpolatorFactoryBean interpolator = new ElementsMessageInterpolatorFactoryBean();
+            interpolator.setMessageSource(messageSource());
+            return interpolator;
+        }
+
         @Bean
         public MessageSource messageSource() {
             ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -104,12 +119,22 @@ public class WebIntegrationTestCase {
     }
 
     @Test
-    public void testMessage() throws Exception {
+    public void testElementsSizeMessage() throws Exception {
         Person person = new Person();
         person.setTags(Arrays.asList("A", "BB", "CCC", "DDDD"));
         LocaleContextHolder.setLocale(Locale.ENGLISH);
         Set<ConstraintViolation<Person>> violations = localValidatorFactoryBean.validate(person);
         Assert.assertEquals(1, violations.size());
         Assert.assertEquals("size must be between 0 and 2 at position 3, 4", new ArrayList<ConstraintViolation>(violations).get(0).getMessage());
+    }
+
+    @Test
+    public void testSizeMessage() throws Exception {
+        Person person = new Person();
+        person.setName("AAA");
+        LocaleContextHolder.setLocale(Locale.ENGLISH);
+        Set<ConstraintViolation<Person>> violations = localValidatorFactoryBean.validate(person);
+        Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("size must be between 0 and 2", new ArrayList<ConstraintViolation>(violations).get(0).getMessage());
     }
 }

@@ -13,6 +13,9 @@ public class Person {
     @ElementsSize(element = String.class, value = @Size(max = 2))
     private List<String> tags;
 
+    @Size(max = 2)
+    private String name;
+
     public List<String> getTags() {
         return tags;
     }
@@ -21,4 +24,11 @@ public class Person {
         this.tags = tags;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

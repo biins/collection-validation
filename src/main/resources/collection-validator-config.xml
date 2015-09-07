@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean class="org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
+
+       <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+              <property name="messageInterpolator" ref="collectionValidatorMessageInterpolator"/>
+       </bean>
+
+       <bean id="collectionValidatorMessageInterpolator" class="org.capsules.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
+              <property name="messageSource" ref="collectionValidatorMessageSource"/>
+       </bean>
+
+       <bean id="collectionValidatorMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+              <property name="basename" value="CollectionValidationMessages"/>
+       </bean>
+
+</beans>
