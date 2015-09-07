@@ -3,7 +3,11 @@
 ## Usage
 
 ### Java config
-Simply add configuration **CollectionValidatorConfig** (don't forget ConfigurationPostProcessor) or
+Simply add configuration **CollectionValidatorConfig**
+```
+@Import(org.biins.validation.collection.constraints.CollectionValidatorConfig)
+```
+or
 ```
 // initialize support of collection validation
 @Bean
@@ -38,20 +42,19 @@ public MessageSource messageSource() {
 ```
 
 ### XML config
+Simply add configuration **CollectionValidatorConfig** don't forget ConfigurationPostProcessor
 ```
-<!-- don't forget ConfigurationPostProcessor -->
-
-<bean class="org.capsules.validation.collection.constraints.CollectionValidatorConfig"/>
+<bean class="org.biins.validation.collection.constraints.CollectionValidatorConfig"/>
 ```
 or
 ```
-<bean class="org.capsules.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
+<bean class="org.biins.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
        
 <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
   <property name="messageInterpolator" ref="collectionValidatorMessageInterpolator"/>
 </bean>
 
-<bean id="collectionValidatorMessageInterpolator" class="org.capsules.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
+<bean id="collectionValidatorMessageInterpolator" class="org.biins.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
   <property name="messageSource" ref="collectionValidatorMessageSource"/>
 </bean>
 
