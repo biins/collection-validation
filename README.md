@@ -9,17 +9,25 @@
 
 ## Example
 ```
---- CLASS
+--- CLASS ---
+
 class Person {
     @ElementsSize(element = String.class, value = @Size(max = 20))
     private List<String> tags;
 }
---- VALIDATION
+
+--- VALIDATION ---
+
 @Valid @ModelAttribute Person person
---- MESSAGE BUNDLE
+
+--- MESSAGE BUNDLE ---
+
 {javax.validation.constraints.Size.message} at position {index}
---- MESSAGE
+
+--- MESSAGE ---
+
 size must be between 0 and 20 at position 1
+
 ```
 
 ## Simple configuration
