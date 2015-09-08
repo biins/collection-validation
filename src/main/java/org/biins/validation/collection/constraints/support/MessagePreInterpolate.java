@@ -9,8 +9,8 @@ import java.util.List;
 public interface MessagePreInterpolate {
     /**
      *
-     * @param message
-     * @param context
+     * @param message Message
+     * @param context Context
      * @param indexes starts with 1
      */
     void buildMessage(String message, ConstraintValidatorContext context, List<Integer> indexes);
