@@ -16,7 +16,7 @@ import javax.validation.MessageInterpolator;
 @Configuration
 public class CollectionValidatorConfig {
 
-    /**
+    /*
      * initialize support of collection validation
      */
     @Bean
@@ -24,7 +24,7 @@ public class CollectionValidatorConfig {
         return new CollectionConstraintValidatorSupport();
     }
 
-    /**
+    /*
      * setup message interpolation
      */
     @Bean
@@ -34,7 +34,7 @@ public class CollectionValidatorConfig {
         return localValidatorFactoryBean;
     }
 
-    /**
+    /*
      * get collection validator message interpolator
      */
     @Bean
@@ -42,7 +42,7 @@ public class CollectionValidatorConfig {
         return messageInterpolationFactoryBean().getObject();
     }
 
-    /**
+    /*
      * create message interpolator with
      */
     @Bean
@@ -51,6 +51,7 @@ public class CollectionValidatorConfig {
         interpolator.setMessageSource(messageSource());
         return interpolator;
     }
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
