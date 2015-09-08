@@ -1,13 +1,64 @@
 # collection-validation
 
-## Usage
+## About
+
+* collection-validation extends JSR 303 validation
+* collection-validation support all javax.validation.constraints annotations
+* collection-validation support some important hibernate validation
+* validation message index is 1 based
+
+## Example
+```
+--- CLASS
+class Person {
+    @ElementsSize(element = String.class, value = @Size(max = 20))
+    private List<String> tags;
+}
+--- VALIDATION
+@Valid @ModelAttribute Person person
+--- MESSAGE BUNDLE
+{javax.validation.constraints.Size.message} at position {index}
+--- MESSAGE
+size must be between 0 and 20 at position 1
+```
+
+## Simple configuration
 
 ### Java config
-Simply add configuration **CollectionValidatorConfig**
 ```
 @Import(org.biins.validation.collection.constraints.CollectionValidatorConfig)
 ```
-or
+### XML config
+* don't forget ConfigurationPostProcessor
+```
+<bean class="org.biins.validation.collection.constraints.CollectionValidatorConfig"/>
+```
+
+## Supported validations
+
+* 'Collection' validator -> 'Element' validator
+* ElementsAssertFalse -> AssertFalse
+* ElementsAssertTrue -> AssertTrue
+* ElementsDecimalMax -> DecimalMax
+* ElementsDecimalMin -> DecimalMin
+* ElementsDigits -> Digits
+* ElementsEmail -> Email
+* ElementsFuture -> Future
+* ElementsLength -> Length
+* ElementsMax -> Max
+* ElementsMin -> Min
+* ElementsNotNull -> NotNull
+* ElementsNull -> Null
+* ElementsPast -> Past
+* ElementsPattern -> Pattern
+* ElementsSize -> Size
+* ElementsURL -> URL
+* ValidElements -> Validator (custom Spring validator)
+
+
+## Complex configuration
+
+### Java config
 ```
 // initialize support of collection validation
 @Bean
@@ -26,7 +77,7 @@ public LocalValidatorFactoryBean localValidatorFactoryBean() throws Exception {
 public MessageInterpolator messageInterpolation() throws Exception {
   return messageInterpolationFactoryBean().getObject();
 }
-// create message interpolator with 
+// create message interpolator with message source
 @Bean
 public ElementsMessageInterpolatorFactoryBean messageInterpolationFactoryBean() {
   ElementsMessageInterpolatorFactoryBean interpolator = new ElementsMessageInterpolatorFactoryBean();
@@ -42,22 +93,18 @@ public MessageSource messageSource() {
 ```
 
 ### XML config
-Simply add configuration **CollectionValidatorConfig** don't forget ConfigurationPostProcessor
 ```
-<bean class="org.biins.validation.collection.constraints.CollectionValidatorConfig"/>
-```
-or
-```
+<!-- initialize support of collection validation -->
 <bean class="org.biins.validation.collection.constraints.support.CollectionConstraintValidatorSupport"/>
-       
+<!-- setup message interpolation -->
 <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
   <property name="messageInterpolator" ref="collectionValidatorMessageInterpolator"/>
 </bean>
-
+<!-- create message interpolator with message source -->
 <bean id="collectionValidatorMessageInterpolator" class="org.biins.validation.collection.constraints.support.ElementsMessageInterpolatorFactoryBean">
   <property name="messageSource" ref="collectionValidatorMessageSource"/>
 </bean>
-
+<!-- create message source -->
 <bean id="collectionValidatorMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
   <property name="basename" value="CollectionValidationMessages"/>
 </bean>
