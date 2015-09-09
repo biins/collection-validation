@@ -1,10 +1,20 @@
 # collection-validation
 
+## Maven
+```
+<dependency>
+    <groupId>org.biins</groupId>
+    <artifactId>collection-validation</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 ## About
 
-* collection-validation extends JSR 303 validation
-* collection-validation support all javax.validation.constraints annotations
-* collection-validation support some important hibernate validation
+collection-validation:
+* extends JSR 303 validation on validation of collection of primitives
+* support all element types as in javax.validation.constraints 
+* support some important hibernate validation
 * validation message index is 1 based
 
 ## Example
